@@ -4,8 +4,8 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const saveBtn = document.getElementById("jsSave");
-let isPainting = false;
-let isFilling = false;
+let canPaint = false;
+let canFill = false;
 
 canvas.width = 700;
 canvas.height = 700;
@@ -18,7 +18,7 @@ canvasContext.lineWidth = 2.5;
 function onMouseMove(event){
     const x = event.offsetX;
     const y = event.offsetY;
-    if (isPainting) {
+    if (canPaint) {
         canvasContext.lineTo(x,y);
         canvasContext.stroke();
     } else {
@@ -27,12 +27,12 @@ function onMouseMove(event){
 }
 
 function onMouseDown(event){
-    if (isFilling === false){isPainting = true;}
+    if (canFill === false){canPaint = true;}
 }
 
-function onMouseUp(event){isPainting = false;}
+function onMouseUp(event){canPaint = false;}
 
-function onMouseLeave(event){isPainting = false;}
+function onMouseLeave(event){canPaint = false;}
 
 function handleColorClick(event){
     const color = event.target.style.backgroundColor;
@@ -45,17 +45,17 @@ function handleRangeChange(event){
 }
 
 function handleModeClick(){
-    if (isFilling) {
-        isFilling = false;
+    if (canFill) {
+        canFill = false;
         mode.innerText = "fill"
     } else{
-        isFilling = true;
+        canFill = true;
         mode.innerText = "paint"
     }
 }
 
 function handleCanvasClick(){
-    if (isFilling){
+    if (canFill){
         canvasContext.fillRect(0,0,canvas.width,canvas.height);
     }
 }
